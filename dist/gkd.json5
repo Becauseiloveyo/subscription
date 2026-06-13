@@ -1,7 +1,7 @@
 {
   id: 2026061301,
   name: 'Becauseiloveyo 自用订阅',
-  version: 3,
+  version: 4,
   author: 'Becauseiloveyo',
   updateUrl: 'https://raw.githubusercontent.com/Becauseiloveyo/subscription/main/dist/gkd.json5',
   checkUpdateUrl: './gkd.version.json5',
@@ -30,7 +30,7 @@
         { key: 0, name: '精确文本：跳过', matches: '[text="跳过"][visibleToUser=true]' },
         { key: 1, name: '短文本：包含跳过', matches: '[text*="跳过"][text.length<8][visibleToUser=true]' },
         { key: 2, name: '描述：包含跳过', matches: '[desc*="跳过"][desc.length<12][visibleToUser=true]' },
-        { key: 3, name: '英文 Skip', matches: '[text~="(?i)^skip(\\s|[0-9])*$"][visibleToUser=true]' },
+        { key: 3, name: '英文 Skip', matches: '[text~="(?i)^skip[0-9 ]*$"][visibleToUser=true]' },
         { key: 4, name: '倒计时跳过', matches: '[text~="^.*[0-9]+(s|秒).*跳过.*$"][visibleToUser=true]' },
       ],
     },
