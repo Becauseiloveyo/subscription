@@ -17,87 +17,68 @@ export default defineGkdApp({
   groups: [
     {
       key: 1,
-      name: '小程序开屏广告-增强跳过',
-      desc: '覆盖常见 AppBrandUI 实例及启动代理页；延迟后点击“跳过”，允许二次点击。',
+      name: '小程序开屏广告-安全跳过',
+      desc: '只点击明确的“跳过/跳過”文本，不匹配微信右上角的小程序关闭控件。',
       categoryKey: 0,
       fastQuery: true,
-      matchTime: 10000,
-      forcedTime: 10000,
-      priorityTime: 10000,
+      matchTime: 12000,
+      forcedTime: 12000,
+      priorityTime: 12000,
       resetMatch: 'activity',
       actionMaximum: 2,
-      actionCd: 500,
+      actionCd: 600,
       activityIds: appBrandActivityIds,
       rules: [
         {
           key: 0,
-          name: '广告文本 + 跳过按钮',
-          actionDelay: 800,
+          name: '广告文本 + 精确跳过',
+          actionDelay: 900,
           matches: [
             '[text="广告" || text="廣告"][visibleToUser=true]',
-            '@[text="跳过" || text="跳過"][visibleToUser=true]',
+            '@TextView[text="跳过" || text="跳過"][visibleToUser=true]',
           ],
         },
         {
           key: 1,
-          name: 'WebView 根节点兜底跳过',
-          matchRoot: true,
-          actionDelay: 500,
-          actionCd: 500,
-          matches:
-            '@TextView[text*="跳过" || text*="跳過"][text.length<10][height<150] <<(25-n) FrameLayout[childCount=2] <(1,2) * < [id="android:id/content"]',
-        },
-        {
-          key: 2,
           name: '短文本跳过兜底',
-          actionDelay: 800,
+          actionDelay: 900,
           matches:
-            '@[text*="跳过" || text*="跳過"][text.length<10][visibleToUser=true]',
+            '@TextView[text*="跳过" || text*="跳過"][text.length<10][visibleToUser=true]',
         },
       ],
     },
     {
       key: 10,
-      name: '小程序全屏/插屏广告-关闭',
-      desc: '关闭小程序内全屏或插屏广告；使用广告文本与关闭控件的组合限制误触。',
+      name: '小程序全屏/插屏广告-安全关闭',
+      desc: '默认关闭。只匹配明确写有“关闭广告/直接关闭”的控件，不匹配微信右上角关闭键。',
       categoryKey: 1,
-      enable: true,
+      enable: false,
       fastQuery: true,
       matchTime: 20000,
       resetMatch: 'activity',
-      actionMaximum: 2,
-      actionCd: 500,
-      actionDelay: 500,
+      actionMaximum: 1,
+      actionCd: 800,
+      actionDelay: 600,
       activityIds: appBrandActivityIds,
       rules: [
         {
           key: 0,
-          name: '结构化广告关闭按钮',
-          excludeMatches:
-            '[text="跳过" || text="跳過"][visibleToUser=true]',
-          matches:
-            '@ImageView[visibleToUser=true][childCount=0][text=null] < FrameLayout[childCount=1] < FrameLayout[childCount=1] <2 FrameLayout[childCount=2] - FrameLayout >4 [text="广告" || text="廣告"]',
-        },
-        {
-          key: 1,
-          name: '广告文本 + 关闭描述',
-          matches: [
-            '[text="广告" || text="廣告"][visibleToUser=true]',
-            '@[desc="关闭" || desc="關閉" || desc*="关闭广告" || desc*="關閉廣告"][visibleToUser=true]',
-          ],
-        },
-        {
-          key: 2,
           name: '明确关闭广告文本',
           matches:
             '@[text="关闭广告" || text="關閉廣告" || text="直接关闭" || text="直接關閉"][visibleToUser=true]',
+        },
+        {
+          key: 1,
+          name: '明确关闭广告描述',
+          matches:
+            '@[desc*="关闭广告" || desc*="關閉廣告" || desc*="关闭此广告" || desc*="關閉此廣告"][visibleToUser=true]',
         },
       ],
     },
     {
       key: 11,
       name: '小程序激励视频-结束后关闭',
-      desc: '默认关闭。启用后仅在出现“奖励已获得/广告已结束”等提示时点击关闭，避免提前关闭导致奖励失效。',
+      desc: '默认关闭。仅在奖励到账或广告结束后点击明确的关闭广告控件。',
       categoryKey: 1,
       enable: false,
       fastQuery: true,
@@ -111,7 +92,7 @@ export default defineGkdApp({
           key: 0,
           matches: [
             '[text*="奖励已" || text*="獎勵已" || text*="广告已结束" || text*="廣告已結束" || text*="已获得奖励"][visibleToUser=true]',
-            '@[desc="关闭" || desc="關閉" || text="关闭广告" || text="關閉廣告"][visibleToUser=true]',
+            '@[desc*="关闭广告" || desc*="關閉廣告" || text="关闭广告" || text="關閉廣告"][visibleToUser=true]',
           ],
         },
       ],
