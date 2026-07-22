@@ -5,11 +5,18 @@ on:
   push:
     branches: [main]
     paths:
-      - 'dist/**'
+      - 'src/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
       - '.github/workflows/build_release.yml'
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: gkd-build-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build_release:
@@ -18,13 +25,43 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
-      - name: Verify GKD dist files
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Setup pnpm
         run: |
-          test -f dist/gkd.json5
-          test -f dist/gkd.version.json5
-          echo 'gkd.version.json5:'
+          corepack enable
+          corepack prepare pnpm@10.31.0 --activate
+          pnpm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check subscription
+        run: pnpm run check
+
+      - name: Build subscription
+        run: pnpm run build
+
+      - name: Verify output
+        run: |
+          test -s dist/gkd.json5
+          test -s dist/gkd.version.json5
           cat dist/gkd.version.json5
-          echo 'gkd.json5 head:'
-          head -c 500 dist/gkd.json5
-          echo
+
+      - name: Commit generated files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dist README.md CHANGELOG.md
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'chore: update GKD dist'
+            git push
+          fi
