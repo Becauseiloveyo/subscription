@@ -7,7 +7,7 @@ import wechatApp from './wechatApp';
 export default defineGkdSubscription({
   id: 2026061301,
   name: 'Becauseiloveyo 自用订阅',
-  version: 7,
+  version: 8,
   author: 'Becauseiloveyo',
   updateUrl:
     'https://raw.githubusercontent.com/Becauseiloveyo/subscription/main/dist/gkd.json5',
