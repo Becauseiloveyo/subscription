@@ -61,6 +61,7 @@ export default defineGkdApp({
       name: '小程序全屏/插屏广告-关闭',
       desc: '关闭小程序内全屏或插屏广告；使用广告文本与关闭控件的组合限制误触。',
       categoryKey: 1,
+      enable: true,
       fastQuery: true,
       matchTime: 20000,
       resetMatch: 'activity',
