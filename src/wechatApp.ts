@@ -17,33 +17,33 @@ export default defineGkdApp({
   groups: [
     {
       key: 1,
-      name: '开屏广告-微信小程序安全跳过',
-      desc: '结合公开订阅的 AppBrandUI 覆盖思路与本机误触反馈，只点击明确“跳过/跳過”文本，不匹配微信右上角关闭键。',
+      name: '开屏广告-微信小程序极速安全跳过',
+      desc: '在 AppBrandUI 内优先直接查找明确“跳过/跳過”文本，节点一出现即点击；不匹配微信右上角关闭键。',
       categoryKey: 0,
       fastQuery: true,
+      order: -2000,
       matchTime: 12000,
-      forcedTime: 12000,
+      forcedTime: 10000,
       priorityTime: 12000,
+      priorityActionMaximum: 1,
       resetMatch: 'activity',
-      actionMaximum: 2,
-      actionCd: 600,
+      actionMaximum: 1,
+      actionCd: 200,
       activityIds: appBrandActivityIds,
       rules: [
         {
           key: 0,
-          name: '广告文本 + 精确跳过',
-          actionDelay: 900,
-          matches: [
-            '[text="广告" || text="廣告"][visibleToUser=true]',
-            '@TextView[text="跳过" || text="跳過"][visibleToUser=true]',
-          ],
+          name: '极速-精确跳过',
+          matches:
+            '@TextView[text="跳过" || text="跳過"][text.length<6][width<500][height<180][visibleToUser=true]',
         },
         {
           key: 1,
-          name: '短文本跳过兜底',
-          actionDelay: 900,
+          name: '快速-倒计时跳过兜底',
+          excludeMatches:
+            '[text*="跳过视频" || text*="跳过片头" || text*="跳过片尾"][visibleToUser=true]',
           matches:
-            '@TextView[text*="跳过" || text*="跳過"][text.length<10][height<180][visibleToUser=true]',
+            '@TextView[text*="跳过" || text*="跳過"][text.length<10][width<500][height<180][visibleToUser=true]',
         },
       ],
     },
