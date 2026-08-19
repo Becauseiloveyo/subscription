@@ -7,7 +7,7 @@ import wechatApp from './wechatApp';
 export default defineGkdSubscription({
   id: 2026061301,
   name: 'Becauseiloveyo 自用订阅',
-  version: 8,
+  version: 9,
   author: 'Becauseiloveyo',
   updateUrl:
     'https://raw.githubusercontent.com/Becauseiloveyo/subscription/main/dist/gkd.json5',
@@ -15,8 +15,5 @@ export default defineGkdSubscription({
   supportUri: 'https://github.com/Becauseiloveyo/subscription',
   categories,
   globalGroups,
-  apps: [
-    ...appList.filter((app) => app.id !== 'com.tencent.mm'),
-    wechatApp,
-  ],
+  apps: [...appList.filter((app) => app.id !== 'com.tencent.mm'), wechatApp],
 });
