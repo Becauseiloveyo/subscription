@@ -27,6 +27,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -63,5 +64,6 @@ jobs:
             echo 'No generated changes'
           else
             git commit -m 'chore: update GKD dist'
-            git push
+            git pull --rebase origin main
+            git push origin main
           fi
