@@ -40,8 +40,7 @@ export default defineGkdApp({
         {
           key: 10,
           name: '兼容-skip资源ID',
-          matches:
-            '@[vid*="skip"][width<400][height<220][visibleToUser=true]',
+          matches: '@[vid*="skip"][width<400][height<220][visibleToUser=true]',
         },
       ],
     },
