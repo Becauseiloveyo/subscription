@@ -118,7 +118,7 @@ export default defineGkdGlobalGroups([
       {
         key: 0,
         excludeMatches:
-          '[text*="全部"][text*="更新" || text*="忽略"][text.length<7][visibleToUser=true] || [text^="继续" || text^="仍然" || text*="权限"][text.length<6][visibleToUser=true] || [text*="来源"][visibleToUser=true]',
+          '([text*="全部"][text*="更新" || text*="忽略"][text.length<7][visibleToUser=true]) || ([text^="继续" || text^="仍然" || text*="权限"][text.length<6][visibleToUser=true]) || ([text*="来源"][visibleToUser=true])',
         matches: [
           '[text*="内测" || text*="测试版" || text*="新版" || text*="更新" || text*="升级" || text*="体验" || text*="Update" || text*="Upgrade"][text!*="自动"][text!*="成功"][text!*="失败"][text!*="检查更新"][text!*="检测更新"][text!*="卸载"][name!$=".EditText"][childCount=0][visibleToUser=true]',
           '@[text="暂不更新" || text="暂不升级" || text="以后再说" || text="下次再说" || text="忽略本次" || text="稍后" || text="取消" || text="Not now" || text="Later"][text.length<8][childCount=0][visibleToUser=true]',
